@@ -1,46 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <title>{{ title }}</title>
-  <link rel="stylesheet" href="{{ stylesheet }}">
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  {{#stylesheet}}
+    <link rel="stylesheet" media="all" href="{{ . }}">
+  {{/stylesheet}}
 </head>
 <body>
-<div id='container'>
-  <div id="background"></div>
-  {{#sources?}}
-  <div id="jump_to">
-    Jump To &hellip;
-    <div id="jump_wrapper">
-      <div id="jump_page">
-        {{#sources}}
-          <a class="source" href="{{ url }}">{{ basename }}</a>
-        {{/sources}}
-      </div>
-    </div>
-  </div>
+  <div id='container'>
+    <div id="background"></div>
+    {{#sources?}}
+      <ul id="jump_to">
+      <li>
+        <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+        <a class="small" href="javascript:void(0);">+</a>
+        <div id="jump_wrapper">
+          <div id="jump_page">
+            {{#sources}}
+              <a class="source" href="{{ url }}">{{ basename }}</a>
+            {{/sources}}
+          </div>
+        </div>
+      </li>
+    </ul>
   {{/sources?}}
-  <table cellspacing=0 cellpadding=0>
-  <thead>
-    <tr>
-      <th class=docs><h1>{{ title }}</h1></th>
-      <th class=code></th>
-    </tr>
-  </thead>
-  <tbody>
+  <ul class="sections">
+    <li id="title">
+      <div class="annotation">
+        <h1>{{ title }}</h1>
+      </div>
+    </li>
     {{#sections}}
-    <tr id='section-{{ section_id }}'>
-      <td class=docs>
+    <li id="section-{{ section_id }}">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-{{ section_id }}">&#182;</a>
         </div>
         {{{ docs }}}
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre>{{{ code }}}</pre></div>
-      </td>
-    </tr>
+      </div>
+    </li>
     {{/sections}}
-  </table>
-</div>
+  </ul>
+  </div>
 </body>
+</html>

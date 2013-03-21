@@ -6,7 +6,7 @@ class Rocco::Layout < Mustache
 
   def initialize(doc, stylesheet, file=nil)
     @doc = doc
-    @stylesheet = stylesheet
+    @stylesheet = Array(stylesheet)
     if not file.nil?
       Rocco::Layout.template_file = file
     end
