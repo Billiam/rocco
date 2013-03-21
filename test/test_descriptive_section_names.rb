@@ -5,7 +5,7 @@ class RoccoDescriptiveSectionNamesTests < Test::Unit::TestCase
     r = roccoize( "filename.rb", "# # Comment 1\ndef codeblock\nend\n" )
     html = r.to_html
     assert(
-      html.include?( "<tr id='section-Comment_1'>" ),
+      html.include?( '<li id="section-Comment_1">' ),
       "The first section should be named"
     )
     assert(

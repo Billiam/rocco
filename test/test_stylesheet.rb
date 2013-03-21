@@ -7,7 +7,8 @@ class RoccoStylesheetTests < Test::Unit::TestCase
     }
     html = r.to_html
     assert(
-      html.include?('<link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">')
+      html.include?('<link rel="stylesheet" media="all" href="http://jashkenas.github.com/docco/resources/parallel/docco.css">'),
+      "Default stylesheet should be included in generated output"
     )
   end
 
@@ -17,7 +18,8 @@ class RoccoStylesheetTests < Test::Unit::TestCase
     }
     html = r.to_html
     assert(
-      html.include?('<link rel="stylesheet" href="http://example.com/custom.css">')
+      html.include?('<link rel="stylesheet" media="all" href="http://example.com/custom.css">'),
+      "Custom stylesheet should be included in generated output"
     )
   end
 end
