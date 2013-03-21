@@ -33,6 +33,13 @@ task :read => :docs do
   sh 'open docs/lib/rocco.html'
 end
 
+# Generate highlight.css
+task :css do
+  css = %x( pygmentize -S github -f html -a .highlight )
+  css.gsub! /^\.highlight  \{.*\}\n/ , ''
+  File.open('resources/highlight.css', 'w') {|f| f.write(css) }
+end
+
 # Make index.html a copy of rocco.html
 file 'docs/index.html' => 'docs/lib/rocco.html' do |f|
   cp 'docs/lib/rocco.html', 'docs/index.html', :preserve => true
@@ -97,7 +104,7 @@ end
 
 # GEMSPEC ===================================================================
 
-file 'rocco.gemspec' => FileList['{lib,test,bin}/**','Rakefile'] do |f|
+file 'rocco.gemspec' => FileList['{lib,test,bin,resources}/**','Rakefile'] do |f|
   version = File.read('lib/rocco.rb')[/VERSION = '(.*)'/] && $1
   date = Time.now.strftime("%Y-%m-%d")
   spec = File.
