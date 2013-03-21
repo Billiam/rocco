@@ -90,7 +90,11 @@ class Rocco
       :language      => 'ruby',
       :comment_chars => '#',
       :template_file => nil,
-      :stylesheet    => 'http://jashkenas.github.com/docco/resources/docco.css'
+      :stylesheet    => [
+        'http://jashkenas.github.com/docco/resources/parallel/public/stylesheets/normalize.css',
+        'http://jashkenas.github.com/docco/resources/parallel/docco.css',
+        'http://billiam.github.com/rocco/resources/highlight.css',
+      ]
     }.merge(options)
 
     # If we detect a language
