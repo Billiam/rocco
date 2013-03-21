@@ -94,6 +94,11 @@ class Rocco
         'http://jashkenas.github.com/docco/resources/parallel/public/stylesheets/normalize.css',
         'http://jashkenas.github.com/docco/resources/parallel/docco.css',
         'http://billiam.github.com/rocco/resources/highlight.css',
+      ],
+      :markdown_extensions => [
+        :smart,
+        :tables,
+        :fenced_code
       ]
     }.merge(options)
 
@@ -439,7 +444,7 @@ class Rocco
 
   # Convert Markdown to classy HTML.
   def process_markdown(text)
-    Markdown.new(text, :smart).to_html
+    Markdown.new(text, *@options[:markdown_extensions]).to_html
   end
 
   # We `popen` a read/write pygmentize process in the parent and
