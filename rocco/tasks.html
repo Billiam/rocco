@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <title>tasks.rb</title>
-  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <link rel="stylesheet" media="all" href="http://jashkenas.github.com/docco/resources/parallel/public/stylesheets/normalize.css">
+    <link rel="stylesheet" media="all" href="http://jashkenas.github.com/docco/resources/parallel/docco.css">
+    <link rel="stylesheet" media="all" href="http://billiam.github.com/rocco/resources/highlight.css">
 </head>
 <body>
-<div id='container'>
-  <div id="background"></div>
-  <div id="jump_to">
-    Jump To &hellip;
-    <div id="jump_wrapper">
-      <div id="jump_page">
-          <a class="source" href="../rocco.html">rocco.rb</a>
-          <a class="source" href="comment_styles.html">comment_styles.rb</a>
-          <a class="source" href="layout.html">layout.rb</a>
-          <a class="source" href="tasks.html">tasks.rb</a>
+  <div id='container'>
+    <div id="background"></div>
+      <ul id="jump_to">
+      <li>
+        <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+        <a class="small" href="javascript:void(0);">+</a>
+        <div id="jump_wrapper">
+          <div id="jump_page">
+              <a class="source" href="../rocco.html">rocco.rb</a>
+              <a class="source" href="comment_styles.html">comment_styles.rb</a>
+              <a class="source" href="layout.html">layout.rb</a>
+              <a class="source" href="tasks.html">tasks.rb</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  <ul class="sections">
+    <li id="title">
+      <div class="annotation">
+        <h1>tasks.rb</h1>
       </div>
-    </div>
-  </div>
-  <table cellspacing=0 cellpadding=0>
-  <thead>
-    <tr>
-      <th class=docs><h1>tasks.rb</h1></th>
-      <th class=code></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id='section-Rocco_Rake_Tasks'>
-      <td class=docs>
+    </li>
+    <li id="section-Rocco_Rake_Tasks">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-Rocco_Rake_Tasks">&#182;</a>
         </div>
@@ -80,115 +84,115 @@ language in the <code>options</code> hash:</p>
      :language =&gt; &lsquo;io&rsquo;,
      :comment_chars =&gt; &lsquo;#&rsquo;
    }</p>
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-    <tr id='section-2'>
-      <td class=docs>
+      </div>
+    </li>
+    <li id="section-2">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-2">&#182;</a>
         </div>
         <p>Might be nice to defer this until we actually need to build docs but this
 will have to do for now.</p>
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;rocco&#39;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-3'>
-      <td class=docs>
+      </div>
+    </li>
+    <li id="section-3">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-3">&#182;</a>
         </div>
         <p>Reopen the Rocco class and add a <code>make</code> class method. This is a simple bit
 of sugar over <code>Rocco::Task.new</code>. If you want your Rake task to be named
 something other than <code>:rocco</code>, you can use <code>Rocco::Task</code> directly.</p>
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre><span class="k">class</span> <span class="nc">Rocco</span>
   <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">make</span><span class="p">(</span><span class="n">dest</span><span class="o">=</span><span class="s1">&#39;docs/&#39;</span><span class="p">,</span> <span class="n">source_files</span><span class="o">=</span><span class="s1">&#39;lib/**/*.rb&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
     <span class="no">Task</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:rocco</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">source_files</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
   <span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-4'>
-      <td class=docs>
+      </div>
+    </li>
+    <li id="section-4">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-4">&#182;</a>
         </div>
         <p><code>Rocco::Task.new</code> takes a task name, the destination directory docs
 should be built under, and a source file pattern or file list.</p>
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre>  <span class="k">class</span> <span class="nc">Task</span>
-    <span class="kp">include</span> <span class="no">Rake</span><span class="o">::</span><span class="no">DSL</span> <span class="k">if</span> <span class="n">defined?</span><span class="p">(</span><span class="no">Rake</span><span class="o">::</span><span class="no">DSL</span><span class="p">)</span>
+    <span class="kp">include</span> <span class="ss">Rake</span><span class="p">:</span><span class="ss">:DSL</span> <span class="k">if</span> <span class="n">defined?</span><span class="p">(</span><span class="ss">Rake</span><span class="p">:</span><span class="ss">:DSL</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;docs/&#39;</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="s1">&#39;lib/**/*.rb&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
       <span class="vi">@name</span> <span class="o">=</span> <span class="n">task_name</span>
       <span class="vi">@dest</span> <span class="o">=</span> <span class="n">dest</span><span class="o">[-</span><span class="mi">1</span><span class="o">]</span> <span class="o">==</span> <span class="sc">?/</span> <span class="p">?</span> <span class="n">dest</span> <span class="p">:</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">dest</span><span class="si">}</span><span class="s2">/&quot;</span>
       <span class="vi">@sources</span> <span class="o">=</span> <span class="no">FileList</span><span class="o">[</span><span class="n">sources</span><span class="o">]</span>
       <span class="vi">@options</span> <span class="o">=</span> <span class="n">options</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-5'>
-      <td class=docs>
+      </div>
+    </li>
+    <li id="section-5">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-5">&#182;</a>
         </div>
         <p>Make sure there&rsquo;s a <code>directory</code> task defined for our destination.</p>
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre>      <span class="n">define_directory_task</span> <span class="vi">@dest</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-6'>
-      <td class=docs>
+      </div>
+    </li>
+    <li id="section-6">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-6">&#182;</a>
         </div>
         <p>Run over the source file list, constructing destination filenames
 and defining file tasks.</p>
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre>      <span class="vi">@sources</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">source_file</span><span class="o">|</span>
         <span class="n">dest_file</span> <span class="o">=</span> <span class="n">source_file</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="no">Regexp</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">File</span><span class="o">.</span><span class="n">extname</span><span class="p">(</span><span class="n">source_file</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">),</span> <span class="s2">&quot;.html&quot;</span><span class="p">)</span>
         <span class="n">define_file_task</span> <span class="n">source_file</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="vi">@dest</span><span class="si">}#{</span><span class="n">dest_file</span><span class="si">}</span><span class="s2">&quot;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-7'>
-      <td class=docs>
+      </div>
+    </li>
+    <li id="section-7">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-7">&#182;</a>
         </div>
         <p>If <code>rake/clean</code> was required, add the generated files to the list.
 That way all Rocco generated are removed when running <code>rake clean</code>.</p>
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre>        <span class="no">CLEAN</span><span class="o">.</span><span class="n">include</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="vi">@dest</span><span class="si">}#{</span><span class="n">dest_file</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">defined?</span> <span class="no">CLEAN</span>
       <span class="k">end</span>
     <span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-8'>
-      <td class=docs>
+      </div>
+    </li>
+    <li id="section-8">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-8">&#182;</a>
         </div>
         <p>Define the destination directory task and make the <code>:rocco</code> task depend
 on it. This causes the destination directory to be created if it doesn&rsquo;t
 already exist.</p>
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">define_directory_task</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
       <span class="n">directory</span> <span class="n">path</span>
       <span class="n">task</span> <span class="vi">@name</span> <span class="o">=&gt;</span> <span class="n">path</span>
     <span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-9'>
-      <td class=docs>
+      </div>
+    </li>
+    <li id="section-9">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-9">&#182;</a>
         </div>
@@ -204,8 +208,8 @@ those changes.</p>
 
 <p>&hellip; would generate the <code>foo.html</code> and <code>bar.html</code> files but only if they
 don&rsquo;t already exist or one of their dependencies was changed.</p>
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">define_file_task</span><span class="p">(</span><span class="n">source_file</span><span class="p">,</span> <span class="n">dest_file</span><span class="p">)</span>
       <span class="n">prerequisites</span> <span class="o">=</span> <span class="o">[</span><span class="vi">@dest</span><span class="p">,</span> <span class="n">source_file</span><span class="o">]</span> <span class="o">+</span> <span class="n">rocco_source_files</span>
       <span class="n">file</span> <span class="n">dest_file</span> <span class="o">=&gt;</span> <span class="n">prerequisites</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
@@ -216,10 +220,10 @@ don&rsquo;t already exist or one of their dependencies was changed.</p>
       <span class="k">end</span>
       <span class="n">task</span> <span class="vi">@name</span> <span class="o">=&gt;</span> <span class="n">dest_file</span>
     <span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-10'>
-      <td class=docs>
+      </div>
+    </li>
+    <li id="section-10">
+      <div class="annotation">
         <div class="pilwrap">
           <a class="pilcrow" href="#section-10">&#182;</a>
         </div>
@@ -227,8 +231,8 @@ don&rsquo;t already exist or one of their dependencies was changed.</p>
 output files to be regenerated properly when someone upgrades the Rocco
 library.</p>
 
-      </td>
-      <td class=code>
+      </div>
+      <div class="content">
         <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">rocco_source_files</span>
       <span class="n">libdir</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">)</span>
       <span class="no">FileList</span><span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">libdir</span><span class="si">}</span><span class="s2">/rocco.rb&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">libdir</span><span class="si">}</span><span class="s2">/rocco/**&quot;</span><span class="o">]</span>
@@ -236,8 +240,9 @@ library.</p>
 
   <span class="k">end</span>
 <span class="k">end</span></pre></div>
-      </td>
-    </tr>
-  </table>
-</div>
+      </div>
+    </li>
+  </ul>
+  </div>
 </body>
+</html>
