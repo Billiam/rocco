@@ -94,6 +94,11 @@ class Rocco
         'http://jashkenas.github.com/docco/resources/parallel/public/stylesheets/normalize.css',
         'http://jashkenas.github.com/docco/resources/parallel/docco.css',
         'http://billiam.github.com/rocco/resources/highlight.css',
+      ],
+      :markdown_extensions => [
+        :smart,
+        :tables,
+        :fenced_code
       ]
     }.merge(options)
 
@@ -384,6 +389,7 @@ class Rocco
     # into separate sections.
     markdown = docs_blocks.join("\n\n##### DIVIDER\n\n")
     docs_html = process_markdown(markdown).split(/\n*<h5>DIVIDER<\/h5>\n*/m)
+    docs_html << "" if docs_html.empty?
 
     # Combine all code blocks into a single big stream with section dividers and
     # run through either `pygmentize(1)` or <http://pygments.appspot.com>
@@ -438,7 +444,7 @@ class Rocco
 
   # Convert Markdown to classy HTML.
   def process_markdown(text)
-    Markdown.new(text, :smart).to_html
+    Markdown.new(text, *@options[:markdown_extensions]).to_html
   end
 
   # We `popen` a read/write pygmentize process in the parent and
