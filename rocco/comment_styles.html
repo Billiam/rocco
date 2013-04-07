@@ -17,10 +17,13 @@
         <a class="small" href="javascript:void(0);">+</a>
         <div id="jump_wrapper">
           <div id="jump_page">
-              <a class="source" href="../rocco.html">rocco.rb</a>
-              <a class="source" href="comment_styles.html">comment_styles.rb</a>
-              <a class="source" href="layout.html">layout.rb</a>
-              <a class="source" href="tasks.html">tasks.rb</a>
+            <div id="jump_sources" class="jump_page">
+                <a class="source" href="../rocco.html">rocco.rb</a>
+                <a class="source" href="comment_styles.html">comment_styles.rb</a>
+                <a class="source" href="layout.html">layout.rb</a>
+                <a class="source" href="tasks.html">tasks.rb</a>
+            </div>
+            <div id="jump_results" class="jump_page"></div>
           </div>
         </div>
       </li>
@@ -31,7 +34,74 @@
         <h1>comment_styles.rb</h1>
       </div>
     </li>
+    <li id="section-1">
+      <div class="annotation">
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        
+      </div>
+      <div class="content">
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Rocco</span>
+  <span class="k">module</span> <span class="nn">CommentStyles</span>
+    <span class="no">C_STYLE_COMMENTS</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">:single</span> <span class="o">=&gt;</span> <span class="s2">&quot;//&quot;</span><span class="p">,</span>
+      <span class="ss">:multi</span>  <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:start</span> <span class="o">=&gt;</span> <span class="s2">&quot;/**&quot;</span><span class="p">,</span> <span class="ss">:middle</span> <span class="o">=&gt;</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="ss">:end</span> <span class="o">=&gt;</span> <span class="s2">&quot;*/&quot;</span> <span class="p">},</span>
+      <span class="ss">:heredoc</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+    <span class="p">}</span>
+
+    <span class="no">COMMENT_STYLES</span>  <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">&quot;bash&quot;</span>          <span class="o">=&gt;</span>  <span class="p">{</span> <span class="ss">:single</span> <span class="o">=&gt;</span> <span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="ss">:multi</span> <span class="o">=&gt;</span> <span class="kp">nil</span> <span class="p">},</span>
+      <span class="s2">&quot;c&quot;</span>             <span class="o">=&gt;</span>  <span class="no">C_STYLE_COMMENTS</span><span class="p">,</span>
+      <span class="s2">&quot;coffee-script&quot;</span> <span class="o">=&gt;</span>  <span class="p">{</span>
+        <span class="ss">:single</span> <span class="o">=&gt;</span> <span class="s2">&quot;#&quot;</span><span class="p">,</span>
+        <span class="ss">:multi</span>  <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:start</span> <span class="o">=&gt;</span> <span class="s2">&quot;###&quot;</span><span class="p">,</span> <span class="ss">:middle</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span> <span class="ss">:end</span> <span class="o">=&gt;</span> <span class="s2">&quot;###&quot;</span> <span class="p">},</span>
+        <span class="ss">:heredoc</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;cpp&quot;</span> <span class="o">=&gt;</span>  <span class="no">C_STYLE_COMMENTS</span><span class="p">,</span>
+      <span class="s2">&quot;csharp&quot;</span> <span class="o">=&gt;</span> <span class="no">C_STYLE_COMMENTS</span><span class="p">,</span>
+      <span class="s2">&quot;css&quot;</span>           <span class="o">=&gt;</span>  <span class="p">{</span>
+        <span class="ss">:single</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
+        <span class="ss">:multi</span>  <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:start</span> <span class="o">=&gt;</span> <span class="s2">&quot;/**&quot;</span><span class="p">,</span> <span class="ss">:middle</span> <span class="o">=&gt;</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="ss">:end</span> <span class="o">=&gt;</span> <span class="s2">&quot;*/&quot;</span> <span class="p">},</span>
+        <span class="ss">:heredoc</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;html&quot;</span>           <span class="o">=&gt;</span>  <span class="p">{</span>
+        <span class="ss">:single</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
+        <span class="ss">:multi</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:start</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;!--&#39;</span><span class="p">,</span> <span class="ss">:middle</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span> <span class="ss">:end</span> <span class="o">=&gt;</span> <span class="s1">&#39;--&gt;&#39;</span> <span class="p">},</span>
+        <span class="ss">:heredoc</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;java&quot;</span>          <span class="o">=&gt;</span>  <span class="no">C_STYLE_COMMENTS</span><span class="p">,</span>
+      <span class="s2">&quot;js&quot;</span>            <span class="o">=&gt;</span>  <span class="no">C_STYLE_COMMENTS</span><span class="p">,</span>
+      <span class="s2">&quot;lua&quot;</span>           <span class="o">=&gt;</span>  <span class="p">{</span>
+        <span class="ss">:single</span> <span class="o">=&gt;</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span>
+        <span class="ss">:multi</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
+        <span class="ss">:heredoc</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;php&quot;</span> <span class="o">=&gt;</span> <span class="no">C_STYLE_COMMENTS</span><span class="p">,</span>
+      <span class="s2">&quot;python&quot;</span>        <span class="o">=&gt;</span>  <span class="p">{</span>
+        <span class="ss">:single</span> <span class="o">=&gt;</span> <span class="s2">&quot;#&quot;</span><span class="p">,</span>
+        <span class="ss">:multi</span>  <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:start</span> <span class="o">=&gt;</span> <span class="s1">&#39;&quot;&quot;&quot;&#39;</span><span class="p">,</span> <span class="ss">:middle</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span> <span class="ss">:end</span> <span class="o">=&gt;</span> <span class="s1">&#39;&quot;&quot;&quot;&#39;</span> <span class="p">},</span>
+        <span class="ss">:heredoc</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;rb&quot;</span>            <span class="o">=&gt;</span>  <span class="p">{</span>
+        <span class="ss">:single</span> <span class="o">=&gt;</span> <span class="s2">&quot;#&quot;</span><span class="p">,</span>
+        <span class="ss">:multi</span>  <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:start</span> <span class="o">=&gt;</span> <span class="s1">&#39;=begin&#39;</span><span class="p">,</span> <span class="ss">:middle</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span> <span class="ss">:end</span> <span class="o">=&gt;</span> <span class="s1">&#39;=end&#39;</span> <span class="p">},</span>
+        <span class="ss">:heredoc</span> <span class="o">=&gt;</span> <span class="s2">&quot;&lt;&lt;-&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;scala&quot;</span>         <span class="o">=&gt;</span>  <span class="no">C_STYLE_COMMENTS</span><span class="p">,</span>
+      <span class="s2">&quot;scheme&quot;</span>        <span class="o">=&gt;</span>  <span class="p">{</span> <span class="ss">:single</span> <span class="o">=&gt;</span> <span class="s2">&quot;;;&quot;</span><span class="p">,</span>  <span class="ss">:multi</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span> <span class="ss">:heredoc</span> <span class="o">=&gt;</span> <span class="kp">nil</span> <span class="p">},</span>
+      <span class="s2">&quot;xml&quot;</span>           <span class="o">=&gt;</span>  <span class="p">{</span>
+        <span class="ss">:single</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
+        <span class="ss">:multi</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:start</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;!--&#39;</span><span class="p">,</span> <span class="ss">:middle</span> <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span> <span class="ss">:end</span> <span class="o">=&gt;</span> <span class="s1">&#39;--&gt;&#39;</span> <span class="p">},</span>
+        <span class="ss">:heredoc</span> <span class="o">=&gt;</span> <span class="kp">nil</span>
+      <span class="p">},</span>
+    <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </div>
+    </li>
   </ul>
   </div>
+    <script type="text/javascript" src="http://billiam.github.com/rocco/resources/docco.js"></script>
 </body>
 </html>

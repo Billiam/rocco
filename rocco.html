@@ -17,10 +17,13 @@
         <a class="small" href="javascript:void(0);">+</a>
         <div id="jump_wrapper">
           <div id="jump_page">
-              <a class="source" href="rocco.html">rocco.rb</a>
-              <a class="source" href="rocco/comment_styles.html">comment_styles.rb</a>
-              <a class="source" href="rocco/layout.html">layout.rb</a>
-              <a class="source" href="rocco/tasks.html">tasks.rb</a>
+            <div id="jump_sources" class="jump_page">
+                <a class="source" href="rocco.html">rocco.rb</a>
+                <a class="source" href="rocco/comment_styles.html">comment_styles.rb</a>
+                <a class="source" href="rocco/layout.html">layout.rb</a>
+                <a class="source" href="rocco/tasks.html">tasks.rb</a>
+            </div>
+            <div id="jump_results" class="jump_page"></div>
           </div>
         </div>
       </li>
@@ -196,6 +199,11 @@ the file is read to retrieve data.</p>
         <span class="s1">&#39;http://jashkenas.github.com/docco/resources/parallel/public/stylesheets/normalize.css&#39;</span><span class="p">,</span>
         <span class="s1">&#39;http://jashkenas.github.com/docco/resources/parallel/docco.css&#39;</span><span class="p">,</span>
         <span class="s1">&#39;http://billiam.github.com/rocco/resources/highlight.css&#39;</span><span class="p">,</span>
+      <span class="o">]</span><span class="p">,</span>
+      <span class="ss">:markdown_extensions</span> <span class="o">=&gt;</span> <span class="o">[</span>
+        <span class="ss">:smart</span><span class="p">,</span>
+        <span class="ss">:tables</span><span class="p">,</span>
+        <span class="ss">:fenced_code</span>
       <span class="o">]</span>
     <span class="p">}</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">options</span><span class="p">)</span></pre></div>
       </div>
@@ -716,7 +724,8 @@ into separate sections.</p>
       </div>
       <div class="content">
         <div class='highlight'><pre>    <span class="n">markdown</span> <span class="o">=</span> <span class="n">docs_blocks</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">##### DIVIDER</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">docs_html</span> <span class="o">=</span> <span class="n">process_markdown</span><span class="p">(</span><span class="n">markdown</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/\n*&lt;h5&gt;DIVIDER&lt;\/h5&gt;\n*/m</span><span class="p">)</span></pre></div>
+    <span class="n">docs_html</span> <span class="o">=</span> <span class="n">process_markdown</span><span class="p">(</span><span class="n">markdown</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/\n*&lt;h5&gt;DIVIDER&lt;\/h5&gt;\n*/m</span><span class="p">)</span>
+    <span class="n">docs_html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">docs_html</span><span class="o">.</span><span class="n">empty?</span></pre></div>
       </div>
     </li>
     <li id="section-38">
@@ -803,7 +812,7 @@ into sections and remove partial <code>&lt;pre&gt;</code> blocks.</p>
       </div>
       <div class="content">
         <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">process_markdown</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-    <span class="no">Markdown</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="ss">:smart</span><span class="p">)</span><span class="o">.</span><span class="n">to_html</span>
+    <span class="no">Markdown</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="o">*</span><span class="vi">@options</span><span class="o">[</span><span class="ss">:markdown_extensions</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to_html</span>
   <span class="k">end</span></pre></div>
       </div>
     </li>
@@ -867,5 +876,6 @@ so we&rsquo;ll fall back on a webservice to highlight the code if it isn&rsquo;t
     </li>
   </ul>
   </div>
+    <script type="text/javascript" src="http://billiam.github.com/rocco/resources/docco.js"></script>
 </body>
 </html>
