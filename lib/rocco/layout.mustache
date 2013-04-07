@@ -18,9 +18,17 @@
         <a class="small" href="javascript:void(0);">+</a>
         <div id="jump_wrapper">
           <div id="jump_page">
-            {{#sources}}
-              <a class="source" href="{{ url }}">{{ basename }}</a>
-            {{/sources}}
+            {{#filter?}}
+              <div id="jump_actions">
+               <input id="jump_filter" placeholder="Filter Files &hellip;">
+              </div>
+            {{/filter?}}
+            <div id="jump_sources" class="jump_page">
+              {{#sources}}
+                <a class="source" href="{{ url }}">{{ basename }}</a>
+              {{/sources}}
+            </div>
+            <div id="jump_results" class="jump_page"></div>
           </div>
         </div>
       </li>
@@ -47,5 +55,8 @@
     {{/sections}}
   </ul>
   </div>
+  {{#sources?}}
+    <script type="text/javascript" src="http://billiam.github.com/rocco/resources/docco.js"></script>
+  {{/sources?}}
 </body>
 </html>

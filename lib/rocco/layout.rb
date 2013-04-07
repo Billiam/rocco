@@ -49,6 +49,10 @@ class Rocco::Layout < Mustache
     @doc.sources.length > 1
   end
 
+  def filter?
+    @doc.sources.length > 5
+  end
+
   def sources
     currentpath = Pathname.new( File.dirname( @doc.file ) )
     @doc.sources.sort.map do |source|
