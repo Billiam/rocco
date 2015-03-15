@@ -76,10 +76,10 @@ class Rocco
     @sources    = sources
 
     @options =  {
-      :language      => 'ruby',
+      :language      => Rouge::Lexers::Ruby,
       :comment_chars => '#',
       :template_file => nil,
-      :encoding => 'UTF-8',
+      :encoding      => 'UTF-8',
       :stylesheet    => [
         'http://jashkenas.github.com/docco/resources/parallel/public/stylesheets/normalize.css',
         'http://jashkenas.github.com/docco/resources/parallel/docco.css',
@@ -92,7 +92,7 @@ class Rocco
       ]
     }.merge(options)
 
-        # When `block` is given, it must read the contents of the file using
+    # When `block` is given, it must read the contents of the file using
     # whatever means necessary and return it as a string. With no `block`,
     # the file is read to retrieve data.
     @data = if block_given?
@@ -101,27 +101,19 @@ class Rocco
       File.read(filename, external_encoding: @options[:encoding], internal_encoding: 'UTF-8')
     end
 
-
-
     # If we detect a language
     if detect_language != Rouge::Lexers::PlainText
       # then assign the detected language to `:language`, and look for
       # comment characters based on that language
       @options[:language] = detect_language
-      @options[:comment_chars] = generate_comment_chars
-
     # If we didn't detect a language, but the user provided one, use it
     # to look around for comment characters to override the default.
-    elsif @options[:language]
-      @options[:language] = Rouge::Lexer.find(@options[:language]) || Rouge::Lexers::Ruby
-      @options[:comment_chars] = generate_comment_chars
-
-    # If neither is true, then convert the default comment character string
-    # into the comment_char syntax (we'll discuss that syntax in detail when
-    # we get to `generate_comment_chars()` in a moment.
-    else
-      @options[:comment_chars] = { :single => @options[:comment_chars], :multi => nil }
+    elsif options[:language]
+      @options[:language] = find_language(options[:language])
     end
+
+    @options[:comment_chars] = generate_comment_chars
+
 
     # Turn `:comment_chars` into a regex matching a series of spaces, the
     # `:comment_chars` string, and the an optional space.  We'll use that
@@ -154,6 +146,10 @@ class Rocco
   require 'rocco/layout'
   def to_html
     Rocco::Layout.new(self, @options[:stylesheet], @options[:template_file]).render
+  end
+
+  def find_language(tag)
+     Rouge::Lexer.find(tag) || raise("Invalid language requested: #{tag}")
   end
 
   # Helper Functions

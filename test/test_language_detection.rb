@@ -15,6 +15,12 @@ class RoccoLanguageDetection < Test::Unit::TestCase
     assert_equal Rouge::Lexers::Ruby, r.options[:language], "`@options[:language]` should be set to `ruby` when nothing else is detected"
   end
 
+  def test_invalid_language
+    assert_raise do
+      Rocco.new( 'filename.an_extension_with_no_meaning_whatsoever', '', { :language => "not_a_language" } ) { "" }
+    end
+  end
+
   def test_fallback_user
     r = Rocco.new( 'filename.an_extension_with_no_meaning_whatsoever', '', { :language => "c" } ) { "" }
 
