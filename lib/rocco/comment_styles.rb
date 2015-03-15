@@ -27,6 +27,7 @@ class Rocco
         :heredoc => nil
       },
       "java"          =>  C_STYLE_COMMENTS,
+      "javascript"    =>  C_STYLE_COMMENTS,
       "js"            =>  C_STYLE_COMMENTS,
       "lua"           =>  {
         :single => "--",

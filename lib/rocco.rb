@@ -46,14 +46,8 @@ end
 # HTML templating.
 require 'mustache'
 
-# We use `Net::HTTP` to highlight code via <http://pygments.appspot.com>
-require 'net/http'
-
-# Code is run through [Pygments](http://pygments.org/) for syntax
-# highlighting. If it's not installed, locally, use a webservice.
-unless ENV['PATH'].split(':').any? { |dir| File.executable?("#{dir}/pygmentize") }
-  warn "WARNING: Pygments not found. Using webservice."
-end
+# Rouge is used for syntax highlighting
+require 'rouge'
 
 #### Public Interface
 
@@ -61,7 +55,7 @@ end
 # for other documentation sources, an `options` hash, and an optional `block`.
 # The `options` hash respects three members:
 #
-# * `:language`: specifies which Pygments lexer to use if one can't be
+# * `:language`: specifies which lexer to use if one can't be
 #   auto-detected from the filename.  _Defaults to `ruby`_.
 #
 # * `:comment_chars`, which specifies the comment characters of the
@@ -103,7 +97,7 @@ class Rocco
     }.merge(options)
 
     # If we detect a language
-    if "text" != detect_language
+    if detect_language != Rouge::Lexers::PlainText
       # then assign the detected language to `:language`, and look for
       # comment characters based on that language
       @options[:language] = detect_language
@@ -112,6 +106,7 @@ class Rocco
     # If we didn't detect a language, but the user provided one, use it
     # to look around for comment characters to override the default.
     elsif @options[:language]
+      @options[:language] = Rouge::Lexer.find(@options[:language]) || Rouge::Lexers::Ruby
       @options[:comment_chars] = generate_comment_chars
 
     # If neither is true, then convert the default comment character string
@@ -157,25 +152,18 @@ class Rocco
   # Helper Functions
   # ----------------
 
-  # Returns `true` if `pygmentize` is available locally, `false` otherwise.
-  def pygmentize?
-    @_pygmentize ||= ENV['PATH'].split(':').
-      any? { |dir| File.executable?("#{dir}/pygmentize") }
-  end
-
-  # If `pygmentize` is available, we can use it to autodetect a file's
-  # language based on its filename.  Filenames without extensions, or with
-  # extensions that `pygmentize` doesn't understand will return `text`.
-  # We'll also return `text` if `pygmentize` isn't available.
-  #
+  # Autodetect file language by filename and content (if possible).
   # We'll memoize the result, as we'll call this a few times.
   def detect_language
-    @_language ||=
-      if pygmentize?
-        %x[pygmentize -N #{@file}].strip.split('+').first
-      else
-        "text"
+    @_language ||= begin
+      opts = { filename: @file }
+
+      if File.readable?(@file) && File.file?(@file)
+        opts[:source] = File.read(@file)
       end
+
+      Rouge::Lexer.guess(opts)
+    end
   end
 
   # Given a file's language, we should be able to autopopulate the
@@ -214,8 +202,8 @@ class Rocco
 
   def generate_comment_chars
     @_commentchar ||=
-      if COMMENT_STYLES[@options[:language]]
-        COMMENT_STYLES[@options[:language]]
+      if @options[:language] && COMMENT_STYLES[@options[:language].tag]
+        COMMENT_STYLES[@options[:language].tag]
       else
         { :single => @options[:comment_chars], :multi => nil, :heredoc => nil }
       end
@@ -392,7 +380,7 @@ class Rocco
     docs_html << "" if docs_html.empty?
 
     # Combine all code blocks into a single big stream with section dividers and
-    # run through either `pygmentize(1)` or <http://pygments.appspot.com>
+    # run through rouge
     span, espan = '<span class="c.?">', '</span>'
     if @options[:comment_chars][:single]
       front = @options[:comment_chars][:single]
@@ -424,14 +412,9 @@ class Rocco
 
     code_stream = code_blocks.join(divider_input)
 
-    code_html =
-      if pygmentize?
-        highlight_pygmentize(code_stream)
-      else
-        highlight_webservice(code_stream)
-      end
+    code_html = syntax_highlight(code_stream)
 
-    # Do some post-processing on the pygments output to split things back
+    # Do some post-processing on the output to split things back
     # into sections and remove partial `<pre>` blocks.
     code_html = code_html.
       split(divider_output).
@@ -447,33 +430,12 @@ class Rocco
     Markdown.new(text, *@options[:markdown_extensions]).to_html
   end
 
-  # We `popen` a read/write pygmentize process in the parent and
-  # then fork off a child process to write the input.
-  def highlight_pygmentize(code)
-    code_html = nil
-    open("|pygmentize -l #{@options[:language]} -O encoding=utf-8 -f html", 'r+') do |fd|
-      pid =
-        fork {
-          fd.close_read
-          fd.write code
-          fd.close_write
-          exit!
-        }
-      fd.close_write
-      code_html = fd.read
-      fd.close_read
-      Process.wait(pid)
-    end
+  # Hand off syntax highlighting to Rouge
+  def syntax_highlight(code)
+    formatter = Rouge::Formatters::HTML.new wrap:false
+    lexer = @options[:language].new
 
-    code_html
-  end
-
-  # Pygments is not one of those things that's trivial for a ruby user to install,
-  # so we'll fall back on a webservice to highlight the code if it isn't available.
-  def highlight_webservice(code)
-    url = URI.parse 'http://pygments.appspot.com/'
-    options = { 'lang' => @options[:language], 'code' => code}
-    Net::HTTP.post_form(url, options).body
+    formatter.format(lexer.lex(code))
   end
 end
 
