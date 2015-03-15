@@ -75,15 +75,11 @@ class Rocco
     @file       = filename
     @sources    = sources
 
-    # When `block` is given, it must read the contents of the file using
-    # whatever means necessary and return it as a string. With no `block`,
-    # the file is read to retrieve data.
-    @data = if block_given? then yield else File.read(filename) end
-
     @options =  {
       :language      => 'ruby',
       :comment_chars => '#',
       :template_file => nil,
+      :encoding => 'UTF-8',
       :stylesheet    => [
         'http://jashkenas.github.com/docco/resources/parallel/public/stylesheets/normalize.css',
         'http://jashkenas.github.com/docco/resources/parallel/docco.css',
@@ -95,6 +91,17 @@ class Rocco
         :fenced_code
       ]
     }.merge(options)
+
+        # When `block` is given, it must read the contents of the file using
+    # whatever means necessary and return it as a string. With no `block`,
+    # the file is read to retrieve data.
+    @data = if block_given?
+      yield
+    else
+      File.read(filename, external_encoding: @options[:encoding], internal_encoding: 'UTF-8')
+    end
+
+
 
     # If we detect a language
     if detect_language != Rouge::Lexers::PlainText
