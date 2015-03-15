@@ -5,6 +5,11 @@ class Rocco
       :multi  => { :start => "/**", :middle => "*", :end => "*/" },
       :heredoc => nil
     }
+    RUBY_COMMENTS = {
+       :single => "#",
+       :multi  => { :start => '=begin', :middle => nil, :end => '=end' },
+       :heredoc => "<<-"
+    }
 
     COMMENT_STYLES  = {
       "bash"          =>  { :single => "#", :multi => nil },
@@ -40,11 +45,8 @@ class Rocco
         :multi  => { :start => '"""', :middle => nil, :end => '"""' },
         :heredoc => nil
       },
-      "rb"            =>  {
-        :single => "#",
-        :multi  => { :start => '=begin', :middle => nil, :end => '=end' },
-        :heredoc => "<<-"
-      },
+      "ruby"          => RUBY_COMMENTS,
+      "rb"            => RUBY_COMMENTS,
       "scala"         =>  C_STYLE_COMMENTS,
       "scheme"        =>  { :single => ";;",  :multi => nil, :heredoc => nil },
       "xml"           =>  {

@@ -231,7 +231,7 @@ class Rocco
     # 1.9 syntax.
     lines.shift if lines[0] =~ /^\#\!/
     lines.shift if lines[0] =~ /coding[:=]\s*[-\w.]+/ &&
-                   [ "python", "rb" ].include?(@options[:language])
+                   [ "python", "ruby" ].include?(@options[:language].tag)
 
     # To detect both block comments and single-line comments, we'll set
     # up a tiny state machine, and loop through each line of the file.
