@@ -12,6 +12,7 @@ class Rocco
     }
 
     COMMENT_STYLES  = {
+      "shell"         =>  { :single => "#", :multi => nil },
       "bash"          =>  { :single => "#", :multi => nil },
       "c"             =>  C_STYLE_COMMENTS,
       "coffee-script" =>  {
