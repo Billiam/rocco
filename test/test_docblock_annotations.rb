@@ -15,7 +15,7 @@ class RoccoDocblockAnnotationsTest < Test::Unit::TestCase
     highlighted = r.highlight( r.split( r.parse( "/**\n * Comment\n * @param type name\n */\ndef codeblock\nend\n" ) ) )
 
     assert_equal(
-      "<p>Comment</p>\n\n<blockquote><p><strong>param</strong> type name</p></blockquote>\n",
+      "<p>Comment</p>\n\n<blockquote>\n<p><strong>param</strong> type name  </p>\n</blockquote>\n",
       highlighted[0][0]
     )
   end
