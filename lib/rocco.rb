@@ -112,8 +112,7 @@ class Rocco
       @options[:language] = find_language(options[:language])
     end
 
-    @options[:comment_chars] = generate_comment_chars
-
+    @options[:comment_chars] = generate_comment_chars options[:comment_chars]
 
     # Turn `:comment_chars` into a regex matching a series of spaces, the
     # `:comment_chars` string, and the an optional space.  We'll use that
@@ -203,13 +202,12 @@ class Rocco
   require 'rocco/comment_styles'
   include CommentStyles
 
-  def generate_comment_chars
-    @_commentchar ||=
-      if @options[:language] && COMMENT_STYLES[@options[:language].tag]
-        COMMENT_STYLES[@options[:language].tag]
-      else
-        { :single => @options[:comment_chars], :multi => nil, :heredoc => nil }
-      end
+  def generate_comment_chars override_chars
+    @_commentchar ||= if override_chars
+      { :single => override_chars, :multi => nil, :heredoc => nil }
+    else
+      COMMENT_STYLES[@options[:language].tag]
+    end
   end
 
   # Internal Parsing and Highlighting
@@ -403,11 +401,11 @@ class Rocco
       divider_input  = "\n\n#{front}\nDIVIDER\n#{back}\n\n"
       divider_output = Regexp.new(
         [ "\\n*",
-          span, Regexp.escape(CGI.escapeHTML(front)), espan,
+          span, Regexp.escape(CGI.escapeHTML(front)),
           "\\n",
-          span, "DIVIDER", espan,
+          "DIVIDER",
           "\\n",
-          span, Regexp.escape(CGI.escapeHTML(back)), espan,
+          Regexp.escape(CGI.escapeHTML(back)), espan,
           "\\n*"
         ].join, Regexp::MULTILINE
       )
@@ -419,6 +417,13 @@ class Rocco
 
     # Do some post-processing on the output to split things back
     # into sections and remove partial `<pre>` blocks.
+    # unless code_html == ''
+    #   # raise @options.inspect
+    #   raise divider_output.inspect
+    #   raise code_html
+    # end
+
+    # raise divider_output.inspect
     code_html = code_html.
       split(divider_output).
       map { |code| code.sub(/\n?<div class="highlight"><pre>/m, '') }.
