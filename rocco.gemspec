@@ -52,8 +52,12 @@ Gem::Specification.new do |s|
   s.executables = ["rocco"]
 
   s.test_files = s.files.select {|path| path =~ /^test\/.*_test.rb/}
-  s.add_dependency 'redcarpet', '~> 1.17'
-  s.add_dependency 'mustache'
+  s.add_dependency 'redcarpet', '~> 3.2.2'
+  s.add_dependency 'mustache', '~> 1.0.1'
+  s.add_dependency 'rouge', '~> 1.8.0'
+
+  s.add_development_dependency 'test-unit'
+  s.add_development_dependency 'rake'
 
   s.has_rdoc = false
   s.homepage = "http://rtomayko.github.com/rocco/"

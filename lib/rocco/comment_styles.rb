@@ -5,8 +5,14 @@ class Rocco
       :multi  => { :start => "/**", :middle => "*", :end => "*/" },
       :heredoc => nil
     }
+    RUBY_COMMENTS = {
+       :single => "#",
+       :multi  => { :start => '=begin', :middle => nil, :end => '=end' },
+       :heredoc => "<<-"
+    }
 
     COMMENT_STYLES  = {
+      "shell"         =>  { :single => "#", :multi => nil },
       "bash"          =>  { :single => "#", :multi => nil },
       "c"             =>  C_STYLE_COMMENTS,
       "coffee-script" =>  {
@@ -27,6 +33,7 @@ class Rocco
         :heredoc => nil
       },
       "java"          =>  C_STYLE_COMMENTS,
+      "javascript"    =>  C_STYLE_COMMENTS,
       "js"            =>  C_STYLE_COMMENTS,
       "lua"           =>  {
         :single => "--",
@@ -39,11 +46,8 @@ class Rocco
         :multi  => { :start => '"""', :middle => nil, :end => '"""' },
         :heredoc => nil
       },
-      "rb"            =>  {
-        :single => "#",
-        :multi  => { :start => '=begin', :middle => nil, :end => '=end' },
-        :heredoc => "<<-"
-      },
+      "ruby"          => RUBY_COMMENTS,
+      "rb"            => RUBY_COMMENTS,
       "scala"         =>  C_STYLE_COMMENTS,
       "scheme"        =>  { :single => ";;",  :multi => nil, :heredoc => nil },
       "xml"           =>  {

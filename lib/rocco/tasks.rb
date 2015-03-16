@@ -33,7 +33,7 @@
 #
 #     Rocco::make 'html/', ['lib/thing.rb', 'lib/thing/*.rb']
 #
-# Finally, it is also possible to specify which Pygments language you would
+# Finally, it is also possible to specify which language you would
 # like to use to highlight the code, as well as the comment characters for the
 # language in the `options` hash:
 #

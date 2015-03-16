@@ -20,9 +20,4 @@ class RoccoAutomaticCommentChars < Test::Unit::TestCase
     r = Rocco.new( 'filename.an_extension_with_no_meaning_whatsoever', '', { :comment_chars => "user" } ) { "" }
     assert_equal "user", r.options[:comment_chars][:single], "`:comment_chars` should be the user's default when falling back to user-provided settings."
   end
-
-  def test_fallback_user_with_unknown_language
-    r = Rocco.new( 'filename.an_extension_with_no_meaning_whatsoever', '', { :language => "not-a-language", :comment_chars => "user" } ) { "" }
-    assert_equal "user", r.options[:comment_chars][:single], "`:comment_chars` should be the user's default when falling back to user-provided settings."
-  end
 end

@@ -1,18 +1,10 @@
 $LOAD_PATH.unshift 'lib'
 
+require 'rouge'
 require 'rake/testtask'
 require 'rake/clean'
 
-task :default => [:sup, :docs, :test]
-
-desc 'Holla'
-task :sup do
-  verbose do
-    lines = File.read('README').split("\n")[0,12]
-    lines.map! { |line| line[15..-1] }
-    puts lines.join("\n")
-  end
-end
+task :default => [:docs, :test]
 
 desc 'Run tests (default)'
 Rake::TestTask.new(:test) do |t|
@@ -35,8 +27,7 @@ end
 
 # Generate highlight.css
 task :css do
-  css = %x( pygmentize -S github -f html -a .highlight )
-  css.gsub! /^\.highlight  \{.*\}\n/ , ''
+  css = Rouge::Themes::Github.render(scope: '.highlight')
   File.open('resources/highlight.css', 'w') {|f| f.write(css) }
 end
 
