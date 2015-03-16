@@ -1,7 +1,7 @@
 # Rocco
 
 [![Dependency Status](https://gemnasium.com/Billiam/rocco.svg)](https://gemnasium.com/Billiam/rocco)
-
+[![Build Status](https://travis-ci.org/Billiam/rocco.svg?branch=master)](https://travis-ci.org/Billiam/rocco)
 
 Rocco is  a quick-and-dirty,  literate-programming-style documentation generator for Ruby. See the Rocco generated docs for more information:
 

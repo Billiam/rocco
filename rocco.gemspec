@@ -57,6 +57,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rouge', '~> 1.8.0'
 
   s.add_development_dependency 'test-unit'
+  s.add_development_dependency 'rake'
 
   s.has_rdoc = false
   s.homepage = "http://rtomayko.github.com/rocco/"
